@@ -28,6 +28,13 @@
       <td><%= car.make %></td>
       <td><%= car.year %></td>
       <td><%= number_to_currency(car.price) %></td>
+      <% if current_user %>
+        <% if current_user.owns?(car) %>
+          <td><%= link_to 'UnClaim', unclaim_car_path(car) %></td>
+        <% else %>
+          <td><%= link_to 'Claim', claim_car_path(car) %></td>
+        <% end %>
+      <% end %>
       <td><%= link_to 'Show', car %></td>
       <td><%= link_to 'Edit', edit_car_path(car) %></td>
       <td><%= link_to 'Destroy', car, method: :delete, data: { confirm: 'Are you sure?' } %></td>

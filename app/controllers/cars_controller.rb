@@ -1,9 +1,37 @@
 class CarsController < ApplicationController
-  before_action :set_car, only: [:show, :edit, :update, :destroy]
+  before_action :set_car, only: [:show, :edit, :update, :destroy, :claim, :unclaim]
 
+  def claim
+    if current_user
+      current_user.cars << @car
+      redirect_to root_path, notice: "#{@car.make} #{@car.model} has been moved to your inventory."
+    end
+  end
+
+  def unclaim
+    if current_user
+      current_user.cars.delete(@car)
+      redirect_to my_cars_path, notice: "#{@car.make} #{@car.model} has been removed from your inventory."
+    end
+  end
 
   def index
-    @cars = Car.all.paginate( page: params[:page], per_page: 20)
+    @cars = Car.where(user_id: nil).paginate(
+      page: params[:page],
+      per_page: 20
+    )
+  end
+
+  def my_cars
+    # @cars = Car.where(user_id: current_user).paginate(
+    #   page: params[:page],
+    #   per_page: 20
+    # )
+    @cars = current_user.cars.paginate(
+      page: params[:page],
+      per_page: 20
+    )
+    render action: 'index'
   end
 
   def new

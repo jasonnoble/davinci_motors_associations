@@ -6,7 +6,20 @@ Rails.application.routes.draw do
   # root 'welcome#index'
   root 'cars#index'
 
-  resources :cars
+  resources :cars do
+    member do
+      # /cars/5/claim
+      get 'claim' => 'cars#claim'
+      get 'unclaim' => 'cars#unclaim'
+    end
+    # collection do
+    #   /cars/foo
+    #   get 'foo'
+    # end
+  end
+
+  get 'my_cars' => 'cars#my_cars'
+
   resources :users,
     only: [:new, :create],
     path_names: { new: 'signup' }
