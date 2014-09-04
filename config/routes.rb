@@ -24,6 +24,9 @@ Rails.application.routes.draw do
     only: [:new, :create],
     path_names: { new: 'signup' }
 
+  get 'verification/:token', to: 'users#verify', as: 'verify_email'
+
+
   get '/login',
     to: 'sessions#login',
     as: 'login'

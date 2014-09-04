@@ -6,6 +6,14 @@ RSpec.describe User, :type => :model do
 
   it { should have_many(:cars) }
 
+  it { should have_db_column(:verified_email).
+    with_options(null: true)
+  }
+
+  it { should have_db_column(:token).
+    with_options(null: true)
+  }
+
   describe '#owns?(car)' do
     let(:car) { FactoryGirl.create(:car) }
     context 'when the user owns the car' do
