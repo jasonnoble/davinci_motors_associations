@@ -1,0 +1,22 @@
+<p><%= notice %></p>
+
+<%= link_to 'New Car', new_car_path %>
+
+<table>
+  <tr>
+    <th>Make</th>
+    <th>Model</th>
+    <th>Year</th>
+    <th>Price</th>
+  </tr>
+
+  <% @cars.each do |car| %>
+    <tr>
+      <td><%= car.make %></td>
+      <td><%= car.model %></td>
+      <td><%= car.year %></td>
+      <td><%= number_to_currency(car.price) %></td>
+      <td><%= link_to('Edit', edit_car_path(car))%></td>
+    </tr>
+  <% end %>
+</table>
